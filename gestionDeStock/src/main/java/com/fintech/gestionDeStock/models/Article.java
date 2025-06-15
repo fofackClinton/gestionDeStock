@@ -13,35 +13,39 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
 @Entity
-@Table(name="article")
+@Table(name = "article")
 public class Article extends AbstractEntity {
-    @Column(name="code_article", nullable=false)
+    @Column(name = "code_article", nullable = false)
     private String codeArticle;
 
-    @Column(name="designation", nullable=false)
+    @Column(name = "designation", nullable = false)
     private String Designation;
 
-    @Column(name="prix_unitaire_ht", nullable=false)
+    @Column(name = "prix_unitaire_ht", nullable = false)
     private BigDecimal prixUnitaireHt;
 
-    @Column(name="taux_tva", nullable=false)
+    @Column(name = "identreprise")
+    private Integer idEntreprise;
+
+    @Column(name = "taux_tva", nullable = false)
     private BigDecimal tauxTva;
 
-    @Column(name="prix_unitaire_ttc", nullable=false)
+    @Column(name = "prix_unitaire_ttc", nullable = false)
     private BigDecimal prixUnitaireTtc;
 
-    @Column(name="photo", nullable=false)
+    @Column(name = "photo", nullable = false)
     private String photo;
 
     @ManyToOne
-    @JoinColumn(name="id_categorie")
+    @JoinColumn(name = "id_categorie")
     private Category category;
 
 }

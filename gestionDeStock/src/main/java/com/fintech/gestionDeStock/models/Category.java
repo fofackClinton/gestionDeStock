@@ -13,23 +13,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
 @Entity
-@Table(name="category")
+@Table(name = "category")
 public class Category extends AbstractEntity {
 
-    @Column(name="code")
+    @Column(name = "code")
     private String code;
 
-    @Column(name="designation")
+    @Column(name = "identreprise")
+    private Integer idEntreprise;
+
+    @Column(name = "designation")
     private String designation;
 
-    @OneToMany(mappedBy="category")
+    @OneToMany(mappedBy = "category")
     private List<Article> article;
 }

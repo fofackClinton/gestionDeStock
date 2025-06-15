@@ -18,26 +18,29 @@ import lombok.Setter;
 @Entity
 @Data
 @Builder
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name="ligne_commande_client")
+@Table(name = "ligne_commande_client")
 public class LigneCommandeClient extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name="id_article")
+    @JoinColumn(name = "id_article")
     private Article article;
 
     @ManyToOne
-    @JoinColumn(name="id_commande_client")
-    private  CommandeClient commandeClient;
+    @JoinColumn(name = "id_commande_client")
+    private CommandeClient commandeClient;
 
-    @Column(name="quantité")
+    @Column(name = "quantité")
     private BigDecimal quantité;
 
-    @Column(name="prix_unitaire")
+    @Column(name = "identreprise")
+    private Integer idEntreprise;
+
+    @Column(name = "prix_unitaire")
     private BigDecimal prixUnitaire;
 
 }

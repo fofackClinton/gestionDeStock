@@ -22,24 +22,27 @@ import lombok.Setter;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @Builder
 @Setter
-@Table(name="mvt_stk")
+@Table(name = "mvt_stk")
 public class MvtStk extends AbstractEntity {
 
-    @Column(name="date_mvt_stk")
+    @Column(name = "date_mvt_stk")
     private Instant dateMvtStk;
 
-    @Column(name="quantite")
+    @Column(name = "quantite")
     private BigDecimal quantite;
 
     @ManyToOne
-    @JoinColumn(name="id_article")
+    @JoinColumn(name = "id_article")
     private Article article;
 
-    @Column(name="type_mvt_stk")
+    @Column(name = "identreprise")
+    private Integer idEntreprise;
+
+    @Column(name = "type_mvt_stk")
     private TypeMvtStk typeMvtStk;
 
 }

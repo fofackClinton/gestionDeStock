@@ -19,32 +19,35 @@ import lombok.Setter;
 @Data
 @Builder
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name="fournisseur")
+@Table(name = "fournisseur")
 public class Fournisseur extends AbstractEntity {
 
-    @Column(name="nom")
+    @Column(name = "nom")
     private String nom;
 
-    @Column(name="prenom")
+    @Column(name = "prenom")
     private String prenom;
 
-    @Column(name="num_tel")
+    @Column(name = "num_tel")
     private String numTel;
 
     @Embedded
     private Adresse adresse;
 
-    @Column(name="photo")
+    @Column(name = "identreprise")
+    private Integer idEntreprise;
+
+    @Column(name = "photo")
     private String photo;
 
-    @Column(name="mail")
+    @Column(name = "mail")
     private String mail;
 
-    @OneToMany(mappedBy="fournisseur")
+    @OneToMany(mappedBy = "fournisseur")
     private List<CommandeFournisseur> commandeFournisseurs;
 
 }

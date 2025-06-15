@@ -22,18 +22,21 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode(callSuper=true)
-@Table(name="ligne_vente")
-public class LigneVente extends AbstractEntity{
-    
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "ligne_vente")
+public class LigneVente extends AbstractEntity {
+
     @ManyToOne
-    @JoinColumn(name="id_vente")
+    @JoinColumn(name = "id_vente")
     private Vente vente;
 
-    @Column(name="quantité")
+    @Column(name = "quantité")
     private BigDecimal quantité;
 
-    @Column(name="prix_unitaire")
+    @Column(name = "identreprise")
+    private Integer idEntreprise;
+
+    @Column(name = "prix_unitaire")
     private BigDecimal prixUnitaire;
 
 }

@@ -20,17 +20,20 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper=true)
-@Table(name="vente")
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "vente")
 public class Vente extends AbstractEntity {
 
-    @Column(name="code")
+    @Column(name = "code")
     private String code;
 
-    @Column(name="date_vente")
+    @Column(name = "date_vente")
     private Instant dateVente;
 
-    @Column(name="commentaire")
+    @Column(name = "commentaire")
     private String commentaire;
+
+    @Column(name = "identreprise")
+    private Integer idEntreprise;
 
 }

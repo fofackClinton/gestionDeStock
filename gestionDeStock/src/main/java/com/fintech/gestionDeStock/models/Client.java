@@ -22,29 +22,32 @@ import lombok.Setter;
 @Getter
 @Setter
 @Data
-@EqualsAndHashCode(callSuper=true)
-@Table(name="client")
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "client")
 public class Client extends AbstractEntity {
-    
-    @Column(name="nom")
+
+    @Column(name = "nom")
     private String nom;
 
-    @Column(name="prenom")
+    @Column(name = "prenom")
     private String prenom;
 
-    @Column(name="num_tel")
+    @Column(name = "num_tel")
     private String numTel;
+
+    @Column(name = "identreprise")
+    private Integer idEntreprise;
 
     @Embedded
     private Adresse adresse;
 
-    @Column(name="photo")
+    @Column(name = "photo")
     private String photo;
 
-    @Column(name="mail")
+    @Column(name = "mail")
     private String mail;
 
-    @OneToMany(mappedBy="client")
+    @OneToMany(mappedBy = "client")
     private List<CommandeClient> commandeClients;
 
 }

@@ -21,37 +21,36 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name="entreprise")
+@Table(name = "entreprise")
 public class Entreprise extends AbstractEntity {
 
-    @Column(name="nom")
+    @Column(name = "nom")
     private String nom;
 
     @Embedded
     private Adresse adresse;
 
-    @Column(name="description")
+    @Column(name = "description")
     private String description;
 
-    @Column(name="code_fiscale")
+    @Column(name = "code_fiscale")
     private String codeFiscale;
 
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name="photo")
+    @Column(name = "photo")
     private String photos;
 
-    @Column(name="numero_telephone")
+    @Column(name = "numero_telephone")
     private String numeroTelephone;
 
-    @Column(name="site_web")
+    @Column(name = "site_web")
     private String siteWeb;
 
-    @OneToMany(mappedBy="entreprise")
+    @OneToMany(mappedBy = "entreprise")
     private List<Utilisateur> utilisateurs;
-
 
 }

@@ -24,21 +24,24 @@ import lombok.Setter;
 @Builder
 @Setter
 @Data
-@EqualsAndHashCode(callSuper=true)
-@Table(name="commande_client")
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "commande_client")
 public class CommandeClient extends AbstractEntity {
-    
-    @Column(name="code")
+
+    @Column(name = "code")
     private String code;
 
-    @Column(name="date_commande")
+    @Column(name = "date_commande")
     private Instant dateCommande;
 
+    @Column(name = "identreprise")
+    private Integer idEntreprise;
+
     @ManyToOne
-    @JoinColumn(name="idClient")
+    @JoinColumn(name = "idClient")
     private Client client;
 
-    @OneToMany(mappedBy="commandeClient")
+    @OneToMany(mappedBy = "commandeClient")
     private List<LigneCommandeClient> ligneCommandeClients;
-    
+
 }
