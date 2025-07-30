@@ -2,8 +2,9 @@ package com.fintech.gestionDeStock.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import com.fintech.gestionDeStock.models.CommandeFournisseur;
 
 @Repository
-public interface CommandeFournisseur extends JpaRepository<Integer, com.fintech.gestionDeStock.models.CommandeFournisseur > {
+public interface CommandeFournisseurRepository extends JpaRepository<CommandeFournisseur, Integer> {
 
 }

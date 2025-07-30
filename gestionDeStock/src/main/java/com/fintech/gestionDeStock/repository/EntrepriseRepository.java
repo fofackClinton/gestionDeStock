@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.fintech.gestionDeStock.models.Entreprise;
 
 @Repository
-public interface EntrepriseRepository extends JpaRepository<Integer, Entreprise> {
+public interface EntrepriseRepository extends JpaRepository<Entreprise, Integer> {
 
 }

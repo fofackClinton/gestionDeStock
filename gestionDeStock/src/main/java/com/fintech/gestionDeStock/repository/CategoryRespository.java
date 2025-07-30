@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.fintech.gestionDeStock.models.Category;
 
 @Repository
-public interface CategoryRespository extends JpaRepository<Integer, Category> {
+public interface CategoryRespository extends JpaRepository<Category, Integer> {
 
 }

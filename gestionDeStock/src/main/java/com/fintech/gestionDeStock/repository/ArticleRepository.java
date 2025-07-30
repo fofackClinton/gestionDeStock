@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.fintech.gestionDeStock.models.Article;
 
 @Repository
-public interface ArticleRepository extends JpaAttributeConverter<Integer, Article> {
+public interface ArticleRepository extends JpaAttributeConverter<Article, Integer> {
 
 }

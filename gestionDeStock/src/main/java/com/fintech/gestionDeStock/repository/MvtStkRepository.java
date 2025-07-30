@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.fintech.gestionDeStock.models.MvtStk;
 
 @Repository
-public interface MvtStkRepository extends JpaRepository<Integer, MvtStk> {
+public interface MvtStkRepository extends JpaRepository<MvtStk, Integer> {
 
 }

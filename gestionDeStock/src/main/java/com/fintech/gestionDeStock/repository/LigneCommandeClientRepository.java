@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.fintech.gestionDeStock.models.LigneCommandeClient;
 
 @Repository
-public interface LigneCommandeClientRepository extends JpaRepository<Integer, LigneCommandeClient> {
+public interface LigneCommandeClientRepository extends JpaRepository<LigneCommandeClient, Integer> {
 
 }
