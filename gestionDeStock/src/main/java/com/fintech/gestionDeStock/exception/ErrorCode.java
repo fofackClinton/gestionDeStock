@@ -3,6 +3,7 @@ package com.fintech.gestionDeStock.exception;
 public enum ErrorCode {
 
     ARTICLE_NOT_FUND(10000),
+    ARTICLE_NOT_VALID(15000),
     CATEGORY_NOT_FUND(20000),
     CLIENT_NOT_FUND(30000),
     COMMANDE_CLIENT_NOT_FUND(40000),
