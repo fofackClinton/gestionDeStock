@@ -8,7 +8,7 @@ import com.fintech.gestionDeStock.dto.CategoryDto;
 import ch.qos.logback.core.util.StringUtil;
 
 public class CategoryValidator {
-    public List<String> validate(CategoryDto dto){
+    public static List<String> validate(CategoryDto dto){
         List<String> errors = new ArrayList<>();
 
         if(dto == null){
