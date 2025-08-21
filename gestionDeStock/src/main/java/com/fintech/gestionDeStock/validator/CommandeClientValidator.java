@@ -24,7 +24,7 @@ public class CommandeClientValidator {
             errors.add("veiller renseigner le code de la commande client");
         }
 
-        if (StringUtil.isNullOrEmpty(dto.getClient().toString())) {
+        if (StringUtil.isNullOrEmpty(dto.getClient().getId().toString())) {
             errors.add("veiller renseigner le client concerner par mla commande");
         }
 

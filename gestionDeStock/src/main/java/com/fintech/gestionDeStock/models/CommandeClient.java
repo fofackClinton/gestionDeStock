@@ -39,7 +39,7 @@ public class CommandeClient extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "idClient")
-    private Client client;
+    private Client client; 
 
     @OneToMany(mappedBy = "commandeClient")
     private List<LigneCommandeClient> ligneCommandeClients;
