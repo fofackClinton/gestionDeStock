@@ -1,8 +1,9 @@
 package com.fintech.gestionDeStock.dto;
 
 import java.time.Instant;
+import java.util.List;
 
-import com.fintech.gestionDeStock.models.Vente;
+import com.fintech.gestionDeStock.models.Ventes;
 
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,9 @@ public class VenteDto {
 
     private String commentaire;
 
-    public static VenteDto fromEntity(Vente vente) {
+    private List<LigneVenteDto> ligneVentes;
+
+    public static VenteDto fromEntity(Ventes vente) {
         if (vente == null)
             return null;
 
@@ -30,11 +33,11 @@ public class VenteDto {
                 .build();
     }
 
-    public static Vente toEntity(VenteDto venteDto) {
+    public static Ventes toEntity(VenteDto venteDto) {
         if (venteDto == null)
             return null;
 
-        Vente vente = new Vente();
+        Ventes vente = new Ventes();
         vente.setCode(venteDto.code);
         vente.setDateVente(venteDto.dateVente);
         vente.setCommentaire(venteDto.commentaire);

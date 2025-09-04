@@ -1,9 +1,11 @@
 package com.fintech.gestionDeStock.models;
 
 import java.time.Instant;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,8 +23,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "vente")
-public class Vente extends AbstractEntity {
+@Table(name = "ventes")
+public class Ventes extends AbstractEntity {
 
     @Column(name = "code")
     private String code;
@@ -35,5 +37,8 @@ public class Vente extends AbstractEntity {
 
     @Column(name = "identreprise")
     private Integer idEntreprise;
+
+    @OneToMany(mappedBy= "vente")
+    private List<LigneVente> ligneVentes;
 
 }

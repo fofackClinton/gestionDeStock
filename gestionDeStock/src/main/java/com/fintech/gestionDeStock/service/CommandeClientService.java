@@ -10,6 +10,8 @@ public interface CommandeClientService {
 
     public List<CommandeClientDto> findAll();
 
+    public CommandeClientDto findByCode(String code);
+
     public CommandeClientDto findById(Integer id);
 
     public void delete(Integer id);

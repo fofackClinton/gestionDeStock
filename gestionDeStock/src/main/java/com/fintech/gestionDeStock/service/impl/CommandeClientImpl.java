@@ -1,12 +1,12 @@
 package com.fintech.gestionDeStock.service.impl;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.fintech.gestionDeStock.dto.CommandeClientDto;
 import com.fintech.gestionDeStock.dto.LigneCommandeClientDto;
@@ -44,7 +44,7 @@ public class CommandeClientImpl implements CommandeClientService {
         if(!errors.isEmpty()){
             log.error("la commande client n'est pas valide", dto);
             throw new InvalidEntityException("la commande Client n'est pas valid", errors, ErrorCode.COMMANDE_CLIENT_NOT_Valid);
-        }
+        } 
 
         Optional<Client> clientOptiional =  clientRepository.findById(dto.getClient().getId());
 
@@ -114,6 +114,15 @@ public class CommandeClientImpl implements CommandeClientService {
 
         commandeClientRepository.deleteById(id);
        
+    }
+
+    @Override
+    public CommandeClientDto findByCode(String code) {
+        if(!StringUtils.hasLength(code)){
+           return null; 
+        }
+        return commandeClientRepository.findCommandeClientByCode(code).map(CommandeClientDto::fromEntity)
+        .orElseThrow(()-> new EntityNotFoundException("Aucune commande client trouvé avec le code"+code, ErrorCode.COMMANDE_CLIENT_NOT_FUND));
     }
 
 }

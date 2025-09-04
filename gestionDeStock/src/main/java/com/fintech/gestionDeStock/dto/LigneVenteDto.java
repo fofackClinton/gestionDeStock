@@ -14,6 +14,8 @@ public class LigneVenteDto {
     private Integer id;
 
     private VenteDto vente;
+    
+    private ArticleDto article;
 
     private BigDecimal quantité;
 
@@ -25,6 +27,7 @@ public class LigneVenteDto {
 
         return LigneVenteDto.builder()
                 .vente(VenteDto.fromEntity(ligneVente.getVente()))
+                .article(ArticleDto.fromEntity(ligneVente.getArticle()))
                 .quantité(ligneVente.getQuantité())
                 .prixUnitaire(ligneVente.getPrixUnitaire())
                 .build();
@@ -36,6 +39,7 @@ public class LigneVenteDto {
 
         LigneVente ligneVente = new LigneVente();
         ligneVente.setVente(VenteDto.toEntity(ligneVenteDto.vente));
+        ligneVente.setArticle(ArticleDto.toEntity(ligneVenteDto.article));
         ligneVente.setQuantité(ligneVenteDto.quantité);
         ligneVente.setPrixUnitaire(ligneVenteDto.prixUnitaire);
         return ligneVente;
