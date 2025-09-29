@@ -26,10 +26,10 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void delete(Integer id) {
-        if(id == null){
+        if (id == null) {
             return;
         }
-        clientRepository.deleteById(id); 
+        clientRepository.deleteById(id);
     }
 
     @Override
@@ -39,19 +39,20 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientDto findById(Integer id) {
-        if(id == null){
+        if (id == null) {
             return null;
         }
 
         Optional<Client> client = clientRepository.findById(id);
         return Optional.of(ClientDto.fromEntity(client.get())).orElseThrow(
-            ()->new EntityNotFoundException("Le client"+id+"n'existe pas dans la BDD", ErrorCode.COMMANDE_CLIENT_NOT_FUND));
+                () -> new EntityNotFoundException("Le client" + id + "n'existe pas dans la BDD",
+                        ErrorCode.COMMANDE_CLIENT_NOT_FUND));
     }
 
     @Override
     public ClientDto save(ClientDto dto) {
         List<String> errors = ClientValidator.validate(dto);
-        if(!errors.isEmpty()){
+        if (!errors.isEmpty()) {
             log.error("Client is not valid", dto);
             throw new InvalidEntityException("Le client n'est as valid", errors, ErrorCode.CLIENT_NOT_VALID);
         }

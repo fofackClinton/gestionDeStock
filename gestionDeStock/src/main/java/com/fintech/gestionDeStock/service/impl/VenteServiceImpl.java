@@ -33,7 +33,8 @@ public class VenteServiceImpl implements VenteService {
     private static LigneVenteRepository ligneVenteRepository;
 
     @Autowired
-    public VenteServiceImpl(VenteRepository venteRepository, ArticleRepository articleRepository,LigneVenteRepository ligneVenteRepository){
+    public VenteServiceImpl(VenteRepository venteRepository, ArticleRepository articleRepository,
+            LigneVenteRepository ligneVenteRepository) {
         this.venteRepository = venteRepository;
         this.articleRepository = articleRepository;
         this.ligneVenteRepository = ligneVenteRepository;
@@ -42,27 +43,30 @@ public class VenteServiceImpl implements VenteService {
     @Override
     public VenteDto save(VenteDto dto) {
         List<String> errors = VenteValidator.validate(dto);
-        if(!errors.isEmpty()){
+        if (!errors.isEmpty()) {
             log.error("la vente est invalide");
-            throw new InvalidEntityException("Impossible d'enregistré une vente invalide",errors, ErrorCode.VENTE_NOT_VALID);
+            throw new InvalidEntityException("Impossible d'enregistré une vente invalide", errors,
+                    ErrorCode.VENTE_NOT_VALID);
         }
 
         List<String> errorsArticle = new ArrayList<>();
-        dto.getLigneVentes().forEach(lignvVenteDto->{
+        dto.getLigneVentes().forEach(lignvVenteDto -> {
             Optional<Article> article = articleRepository.findById(lignvVenteDto.getArticle().getId());
-            if(article.isEmpty()){
-                errorsArticle.add("Aucun article avec l'ID"+lignvVenteDto.getArticle().getId()+"n'a été trouvé dans la BDD");
+            if (article.isEmpty()) {
+                errorsArticle.add(
+                        "Aucun article avec l'ID" + lignvVenteDto.getArticle().getId() + "n'a été trouvé dans la BDD");
             }
         });
 
-        if(!errorsArticle.isEmpty()){
-             log.error("la vente est invalide");
-            throw new InvalidEntityException("Impossible d'enregistré une vente invalide",errorsArticle, ErrorCode.VENTE_NOT_VALID);
+        if (!errorsArticle.isEmpty()) {
+            log.error("la vente est invalide");
+            throw new InvalidEntityException("Impossible d'enregistré une vente invalide", errorsArticle,
+                    ErrorCode.VENTE_NOT_VALID);
         }
 
         Ventes vente = venteRepository.save(VenteDto.toEntity(dto));
-        
-        dto.getLigneVentes().forEach(ligneVenteDto->{
+
+        dto.getLigneVentes().forEach(ligneVenteDto -> {
             LigneVente ligneVente = LigneVenteDto.toEntity(ligneVenteDto);
             ligneVente.setVente(vente);
             ligneVenteRepository.save(ligneVente);
@@ -78,7 +82,7 @@ public class VenteServiceImpl implements VenteService {
 
     @Override
     public void delete(Integer id) {
-        if(id == null){
+        if (id == null) {
             return;
         }
         venteRepository.deleteById(id);
@@ -86,20 +90,19 @@ public class VenteServiceImpl implements VenteService {
 
     @Override
     public VenteDto findById(Integer id) {
-        if(id == null){
+        if (id == null) {
             return null;
         }
         Optional<Ventes> venteOptional = venteRepository.findById(id);
         return Optional.of(VenteDto.fromEntity(venteOptional.get())).orElseThrow(
-            ()-> new EntityNotFoundException("la vente avec l'id n'a pas été trouvé",ErrorCode.VENTE_NOT_FUND)
-        );
+                () -> new EntityNotFoundException("la vente avec l'id n'a pas été trouvé", ErrorCode.VENTE_NOT_FUND));
     }
 
     @Override
     public VenteDto findByCode(String code) {
         return venteRepository.findVenteByCode(code).map(VenteDto::fromEntity).orElseThrow(
-            ()-> new EntityNotFoundException("la commande avec le code"+code+" n'existe pas",ErrorCode.VENTE_NOT_FUND)
-        );
+                () -> new EntityNotFoundException("la commande avec le code" + code + " n'existe pas",
+                        ErrorCode.VENTE_NOT_FUND));
     }
 
 }

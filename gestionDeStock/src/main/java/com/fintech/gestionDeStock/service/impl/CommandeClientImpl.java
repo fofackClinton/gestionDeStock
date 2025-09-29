@@ -36,47 +36,50 @@ public class CommandeClientImpl implements CommandeClientService {
     private final ClientRepository clientRepository;
     private final LigneCommandeClientRepository ligneCommandeClientRepository;
     private final ArticleRepository articleRepository;
-    
+
     @Override
     public CommandeClientDto save(CommandeClientDto dto) {
         List<String> errors = CommandeClientValidator.validate(dto);
 
-        if(!errors.isEmpty()){
+        if (!errors.isEmpty()) {
             log.error("la commande client n'est pas valide", dto);
-            throw new InvalidEntityException("la commande Client n'est pas valid", errors, ErrorCode.COMMANDE_CLIENT_NOT_Valid);
-        } 
+            throw new InvalidEntityException("la commande Client n'est pas valid", errors,
+                    ErrorCode.COMMANDE_CLIENT_NOT_Valid);
+        }
 
-        Optional<Client> clientOptiional =  clientRepository.findById(dto.getClient().getId());
+        Optional<Client> clientOptiional = clientRepository.findById(dto.getClient().getId());
 
-        if(clientOptiional.isEmpty()){
-            log.error("le client avec l'id"+dto.getClient().getId()+"n'a pas été trouvé");
-            throw new EntityNotFoundException("le client avec l'ID"+dto.getClient().getId()+"n'est pas present dans la bdd");
+        if (clientOptiional.isEmpty()) {
+            log.error("le client avec l'id" + dto.getClient().getId() + "n'a pas été trouvé");
+            throw new EntityNotFoundException(
+                    "le client avec l'ID" + dto.getClient().getId() + "n'est pas present dans la bdd");
         }
 
         List<String> articleErrors = new ArrayList<>();
 
-        if(dto.getLigneCommandeClients() != null){
+        if (dto.getLigneCommandeClients() != null) {
             dto.getLigneCommandeClients().forEach(lcdcl -> {
-                if(lcdcl.getArticle() != null){
+                if (lcdcl.getArticle() != null) {
                     Optional<Article> article = articleRepository.findById(lcdcl.getArticle().getId());
-                    if(article.isEmpty()){
-                        articleErrors.add("L'article avec l'ID"+lcdcl.getArticle().getId()+"n'existe pas");
+                    if (article.isEmpty()) {
+                        articleErrors.add("L'article avec l'ID" + lcdcl.getArticle().getId() + "n'existe pas");
                     }
                 }
             });
-        }else{
+        } else {
             articleErrors.add("impossible d'ajouter une commande avec un article null");
         }
 
-        if(!articleErrors.isEmpty()){
+        if (!articleErrors.isEmpty()) {
             log.error("");
-            throw new InvalidEntityException("l'article n'existe pas dans la BDD",articleErrors,ErrorCode.ARTICLE_NOT_FUND);
+            throw new InvalidEntityException("l'article n'existe pas dans la BDD", articleErrors,
+                    ErrorCode.ARTICLE_NOT_FUND);
         }
 
         CommandeClient cmdclSave = commandeClientRepository.save(CommandeClientDto.toEntity(dto));
 
-        if(dto.getLigneCommandeClients() != null){
-            dto.getLigneCommandeClients().forEach(lccl->{
+        if (dto.getLigneCommandeClients() != null) {
+            dto.getLigneCommandeClients().forEach(lccl -> {
                 LigneCommandeClient ligneCommandeClient = LigneCommandeClientDto.toEntity(lccl);
                 ligneCommandeClient.setCommandeClient(cmdclSave);
                 ligneCommandeClientRepository.save(ligneCommandeClient);
@@ -89,40 +92,42 @@ public class CommandeClientImpl implements CommandeClientService {
 
     @Override
     public List<CommandeClientDto> findAll() {
-        
-        return commandeClientRepository.findAll().stream().map(CommandeClientDto::fromEntity).collect(Collectors.toList());
+
+        return commandeClientRepository.findAll().stream().map(CommandeClientDto::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
     public CommandeClientDto findById(Integer id) {
-        if(id == null){
+        if (id == null) {
             return null;
         }
 
-         Optional<CommandeClient> commandeClient = commandeClientRepository.findById(id);
+        Optional<CommandeClient> commandeClient = commandeClientRepository.findById(id);
 
-         return Optional.of(CommandeClientDto.fromEntity(commandeClient.get())).orElseThrow(
-            ()-> new EntityNotFoundException("la commande client"+id+"n'exista pas dans la BDD",ErrorCode.COMMANDE_CLIENT_NOT_FUND)
-         );
+        return Optional.of(CommandeClientDto.fromEntity(commandeClient.get())).orElseThrow(
+                () -> new EntityNotFoundException("la commande client" + id + "n'exista pas dans la BDD",
+                        ErrorCode.COMMANDE_CLIENT_NOT_FUND));
     }
 
     @Override
     public void delete(Integer id) {
-        if(id == null){
+        if (id == null) {
             return;
         }
 
         commandeClientRepository.deleteById(id);
-       
+
     }
 
     @Override
     public CommandeClientDto findByCode(String code) {
-        if(!StringUtils.hasLength(code)){
-           return null; 
+        if (!StringUtils.hasLength(code)) {
+            return null;
         }
         return commandeClientRepository.findCommandeClientByCode(code).map(CommandeClientDto::fromEntity)
-        .orElseThrow(()-> new EntityNotFoundException("Aucune commande client trouvé avec le code"+code, ErrorCode.COMMANDE_CLIENT_NOT_FUND));
+                .orElseThrow(() -> new EntityNotFoundException("Aucune commande client trouvé avec le code" + code,
+                        ErrorCode.COMMANDE_CLIENT_NOT_FUND));
     }
 
 }

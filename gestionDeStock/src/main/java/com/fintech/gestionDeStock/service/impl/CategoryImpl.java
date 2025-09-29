@@ -21,15 +21,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class CategoryImpl implements CategoryService{
+public class CategoryImpl implements CategoryService {
     private final CategoryRespository categoryRespository;
 
     @Override
     public void delete(Integer id) {
         if (id == null) {
-           return;
+            return;
         }
-        categoryRespository.deleteById(id);   
+        categoryRespository.deleteById(id);
     }
 
     @Override
@@ -40,12 +40,13 @@ public class CategoryImpl implements CategoryService{
     @Override
     public CategoryDto findByCode(String code) {
         if (code == null) {
-           return null;
+            return null;
         }
         Optional<Category> category = categoryRespository.findCategoryByCode(code);
 
         return Optional.of(CategoryDto.fromEntity(category.get())).orElseThrow(
-            ()-> new EntityNotFoundException("la category avec le code"+code+ "n'existe pas dans la BDD", ErrorCode.CATEGORY_NOT_FUND ));
+                () -> new EntityNotFoundException("la category avec le code" + code + "n'existe pas dans la BDD",
+                        ErrorCode.CATEGORY_NOT_FUND));
     }
 
     @Override
@@ -54,14 +55,15 @@ public class CategoryImpl implements CategoryService{
             return null;
         }
         Optional<Category> category = categoryRespository.findById(id);
-        return Optional.of(CategoryDto.fromEntity(category.get())).orElseThrow(()->
-        new EntityNotFoundException("la category avec l'id"+id+"n'existe pas", ErrorCode.CATEGORY_NOT_FUND));
+        return Optional.of(CategoryDto.fromEntity(category.get()))
+                .orElseThrow(() -> new EntityNotFoundException("la category avec l'id" + id + "n'existe pas",
+                        ErrorCode.CATEGORY_NOT_FUND));
     }
 
     @Override
     public CategoryDto save(CategoryDto dto) {
         List<String> errors = CategoryValidator.validate(dto);
-        if(!errors.isEmpty()){
+        if (!errors.isEmpty()) {
             log.error("Category is not vald", dto);
             throw new InvalidEntityException("la category n'est pas valide", errors, ErrorCode.CATEGORY_NOT_VALID);
         }

@@ -19,7 +19,7 @@ public class ArticleController implements ArticleApi {
     @Override
     public void delete(Integer id) {
         articleService.delete(id);
-        
+
     }
 
     @Override
@@ -35,13 +35,13 @@ public class ArticleController implements ArticleApi {
 
     @Override
     public ArticleDto findById(Integer id) {
-        
+
         return articleService.findById(id);
     }
 
     @Override
     public ArticleDto save(ArticleDto dto) {
-        
+
         return articleService.save(dto);
-    } 
+    }
 }

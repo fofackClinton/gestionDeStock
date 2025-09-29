@@ -23,13 +23,13 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class EntrepriseServiceImpl implements EntrepriseService {
     private final EntrepriseRepository entrepriseRepository;
-    
+
     @Override
     public void delete(Integer id) {
-        if(id == null){
+        if (id == null) {
             return;
         }
-        entrepriseRepository.deleteById(id); 
+        entrepriseRepository.deleteById(id);
     }
 
     @Override
@@ -40,17 +40,18 @@ public class EntrepriseServiceImpl implements EntrepriseService {
     @Override
     public EntrepriseDto findById(Integer id) {
         if (id == null) {
-           return null;
+            return null;
         }
         Optional<Entreprise> entreprise = entrepriseRepository.findById(id);
         return Optional.of(EntrepriseDto.fromEntity(entreprise.get())).orElseThrow(
-            ()-> new EntityNotFoundException("l'entreprise "+id+ "n'existe pas dans la BDD", ErrorCode.ENTREPRISE_NOT_FUND ));
+                () -> new EntityNotFoundException("l'entreprise " + id + "n'existe pas dans la BDD",
+                        ErrorCode.ENTREPRISE_NOT_FUND));
     }
 
     @Override
     public EntrepriseDto save(EntrepriseDto dto) {
         List<String> errors = EntrepriseValidator.validate(dto);
-        if(!errors.isEmpty()){
+        if (!errors.isEmpty()) {
             log.error("Entreprise is not vald", dto);
             throw new InvalidEntityException("l'entreprise n'est pas valide", errors, ErrorCode.ENTREPRISE_NOT_VALID);
         }

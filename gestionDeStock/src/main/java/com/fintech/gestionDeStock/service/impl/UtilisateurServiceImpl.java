@@ -26,10 +26,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public void delete(Integer id) {
-        if(id == null){
+        if (id == null) {
             return;
         }
-        utilisateurRepository.deleteById(id);  
+        utilisateurRepository.deleteById(id);
     }
 
     @Override
@@ -40,17 +40,18 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     @Override
     public UtilisateurDto findById(Integer id) {
         if (id == null) {
-           return null;
+            return null;
         }
         Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
         return Optional.of(UtilisateurDto.fromEntity(utilisateur.get())).orElseThrow(
-            ()-> new EntityNotFoundException("l'utilisateur "+id+ "n'existe pas dans la BDD", ErrorCode.UTILISATEUR_NOT_FUND ));
+                () -> new EntityNotFoundException("l'utilisateur " + id + "n'existe pas dans la BDD",
+                        ErrorCode.UTILISATEUR_NOT_FUND));
     }
 
     @Override
     public UtilisateurDto save(UtilisateurDto dto) {
-       List<String> errors = UtilisateurValidator.validate(dto);
-        if(!errors.isEmpty()){
+        List<String> errors = UtilisateurValidator.validate(dto);
+        if (!errors.isEmpty()) {
             log.error("Utilisateur is not valid", dto);
             throw new InvalidEntityException("l'utilisateur n'est pas valide", errors, ErrorCode.UTILISATEUR_NOT_VALID);
         }

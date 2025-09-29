@@ -20,6 +20,7 @@ import lombok.Data;
 @Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+
 public class AbstractEntity implements Serializable {
 
     @Id
@@ -28,7 +29,7 @@ public class AbstractEntity implements Serializable {
 
     @CreatedDate
     @JsonIgnore
-    @Column(name= "created_at", nullable= false)
+    @Column(name= "created_at", nullable = false, updatable = false)
     private Instant creationDate;
 
     @LastModifiedDate

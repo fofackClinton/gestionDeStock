@@ -23,13 +23,13 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class FournisseurServiceImpl implements FournisseurService {
     private final FournisseurRepository fournisseurRepository;
-    
+
     @Override
     public void delete(Integer id) {
-        if(id == null){
+        if (id == null) {
             return;
         }
-        fournisseurRepository.deleteById(id); 
+        fournisseurRepository.deleteById(id);
     }
 
     @Override
@@ -40,19 +40,21 @@ public class FournisseurServiceImpl implements FournisseurService {
     @Override
     public FournisseurDto findById(Integer id) {
         if (id == null) {
-           return null;
+            return null;
         }
         Optional<Fournisseur> fournisseur = fournisseurRepository.findById(id);
         return Optional.of(FournisseurDto.fromEntity(fournisseur.get())).orElseThrow(
-            ()-> new EntityNotFoundException("le fournisseur "+id+ "n'existe pas dans la BDD", ErrorCode.FOURNISSEUR_NOT_FUND ));
+                () -> new EntityNotFoundException("le fournisseur " + id + "n'existe pas dans la BDD",
+                        ErrorCode.FOURNISSEUR_NOT_FUND));
     }
 
     @Override
     public FournisseurDto save(FournisseurDto dto) {
-       List<String> errors = FournisseurValidator.validate(dto);
-        if(!errors.isEmpty()){
+        List<String> errors = FournisseurValidator.validate(dto);
+        if (!errors.isEmpty()) {
             log.error("Fournissuer is not valid", dto);
-            throw new InvalidEntityException("le fournisseur n'est pas valide", errors, ErrorCode.FOURNISSEUR_NOT_VALID);
+            throw new InvalidEntityException("le fournisseur n'est pas valide", errors,
+                    ErrorCode.FOURNISSEUR_NOT_VALID);
         }
         return FournisseurDto.fromEntity(fournisseurRepository.save(FournisseurDto.toEntity(dto)));
     }
